@@ -1,8 +1,8 @@
 linux目录的结构
 
-![](images/WEBRESOURCE8dd4abc7548a4031b0880137719c47baimage.png)
+![](images/WEBRESOURCE576e74a05eb344f393722d4fbc1e1015image.png)
 
-![](images/WEBRESOURCE5a340f9262a947ca8629e831b862c352image.png)
+![](images/WEBRESOURCE5f2bdd4eedae432e9364ff96031c3e02image.png)
 
 根目录下各个目录的作用和含义说明
 
@@ -68,7 +68,7 @@ cd ../..	..的意思是找爹。这里是找两个爹
 
 注意：删除文件时的提示信息显示为乱码
 
-![](images/WEBRESOURCE19ed77068f884b12b9e5204193c452f6image.png)
+![](images/WEBRESOURCE454ae768db624dfa9bc53b607522f44dimage.png)
 
 需要修改linux的编码
 
@@ -279,3 +279,123 @@ cp
     cp -r itcast/ ./itheima/ 将itcast目录和目录下的所有文件复制到itheima目录下
     cp -r itcast/* ./itheima/  将itcast目录下所有文件复制到itheima目录下
 ```
+
+经典场景：
+
+在进行配置的时候，防止改错了没有办法回滚，所以会先复制一份原来的文件
+
+mv
+
+```bash
+作用：为文件或目录改名、或将文件或目录移动到其它位置（move）
+语法 mv source dest
+
+举例：
+    mv hello.txt hi.txt    将hello.txt改名为hi.txt（移动hello.txt到当前为止，并重命名）
+    mv hi.txt itheima/    将文件hi.txt移动到itheima目录中
+    mv hi.txt itheima/hello.txt    将hi.txt移动到itheima目录中，并改名为hello.txt
+    mv itcast/ itheima/    （不存在就改名）如果itheima目录不存在，将itcast目录改名为itheima
+    mv itcast/ itheima/    （存在就移动文件和目录）如果itheima目录存在，将itcast目录移动到itheima目录中          
+```
+
+打包和压缩命令
+
+```bash
+作用：对文件进行打包、解包、压缩、解压
+语法： tar [-zcxvf] fileName [files]
+    约定：
+        包文件后缀为.tar表示只是完成了打包，并没有压缩（这个和window是不同的，tar在window代表打包和压缩）
+        包文件后缀为.tar.gz表示打包的同时还进行压缩
+说明：
+    -z：z代表的事gzip，通过gzip命令处理文件，gzip可以对文件压缩或者解压
+    -c：c代表create，即创建新的包文件（打包）（如果c与z参数配合，则表示打包并压缩）
+    -x：x代表的事extract，实现从包文件中还原文件（拆包）（如果x和z参数配合，则表示解压并拆包）
+    -v: v代表的事verbose，显示命令的执行过程
+    -f：f代表的事file，用于指定包文件的名称
+    注意点：命令中x与c二选一，如果z配合c一块使用，表示打包并压缩
+            如果z配合x一块使用，表示解压并拆包
+            
+举例：
+    打包
+        tar -cvf hello.tar ./*     将当前目录下的所有文件打包，打包后的文件名为hello.tar
+        tar -zcvf  hello.tar.gz ./*    将大钱目录下的所有文件打包并压缩，打包压缩后的文件名为hello.tar.gz
+        
+    解包：
+        tar -xvf hello.tar    将hello.tar文件进行解包，并将解包后的文件放在当前目录
+        tar -zxvf hello.tar.gz -C /usr/local    将hello.tat.gz文件进行解压，并将解压后的文件放在/usr/local目录
+
+注意：
+    指令f一定要放在最后
+```
+
+vi和vim的区别是vim有颜色的提示，看这更好看一些
+
+vim的三种命令模式转换
+
+![](images/WEBRESOURCEa25d9717561149e6883900e5301d7fc6image.png)
+
+查找命令
+
+```bash
+find
+作用：在指定目录下根据文件的名称递归查找文件
+find [目录名] [-name '查找字符串']		功能
+无参名						搜索当前目录下所有的文件
+目录名                                           搜索指定目录下所有的文件和子目录
+-name '查询字符串'                               指定要搜索的字符串* 匹配多个字符
+
+作用：在指定目录下根据文件的名称递归查找文件
+语法： find dirName -option fileName
+举例：
+    find . -name "*.java"    在当前目录及其子目录下查找.java结尾的文件
+    find   /usr/itcast   -name "*.java"    在/itcast目录及其子目录下查找.java结尾的文件
+    find ./workspace -name "*.java"         .是当前目录 /workspace是当前目录下的某个目录
+
+```
+
+```bash
+grep
+grep也是一个文本搜索工具，它能使用字符串搜索文本，并把匹配行和行号打印出来
+    -find命令：查找文件或目录（搜索文件夹和整个文件）
+    -grep命令：搜索文件内容的字符串
+    
+说明：
+    1.在文件外部就可以进行的字符串的搜索行
+    2.参数
+        i：忽略大小写
+        n：行号不匹配
+        v：不匹配
+    3.搜索的内容所属的文件必须存在当前目录中
+
+```
+
+总结：
+
+```bash
+掌握Linux的文件目录操作命令
+    1.创建文件：touch 文件
+    2.创建文件夹：mkdir 文件夹名
+    3.更改目录：cd 更改目录
+    4.查看文件
+        1) cat 文件名； 查看整个文件
+        2）more 文件名；从头开始分屏查看，空格代表向下一屏
+        3）tail 文件名；从后往前查看，默认查看后10行， tail -行 文件名
+    5.删除文件和目录：rm -rf 删除的内容
+
+掌握Linux的拷贝移动命令
+    1.拷贝：复制 cp 源文件 目的地
+    2.剪切和重名名
+        mv 源文件 目的地
+            剪切：目的地存在
+            重命名：目的地不存在
+掌握Linux的文本编译vim命令
+    1）进入命令模式：vim 文件名。都是整行操作。yy复制 p粘贴 dd删除 u撤销/搜索的内容
+    2）从命令行模式进入编辑模式：i 光标前插入 a 光标后插入 o 换行插入
+    3）从编辑模式到命令模式按esc，然后再英文输入法按：进入到底行模式。：wq 保存退出  :q!不保存退出
+
+掌握Linux的查找命令
+    1）find 搜索目录 -name '要搜索的字符串' 表示再指定目录中查询指定文件或目录
+    2）grep -nvi 搜索的字符串的 文件名：在指定文件中查找要搜索的内容
+```
+
+ 
