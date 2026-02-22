@@ -1,4 +1,4 @@
-![](images/WEBRESOURCE4b18ce92cfab4b3389696dabe453bd8bimage.png)
+![](images/WEBRESOURCEf4ca00a74d5e4d8185bbb7e4b7e33e1bimage.png)
 
 在linux系统中我们一般将软件安装到根路目录下的/usr/local目录中，我们在这个目录下可以创建一个自定义的目录，然后将jdk tomact等软件放到这个目录下
 
@@ -58,11 +58,11 @@ ps -aux | grep tomact
 
 如：windows的防火墙
 
-![](images/WEBRESOURCEa43ba935dc1d47a58907596d4a94c15aimage.png)
+![](images/WEBRESOURCE4f70c360862b4c5fa939f0efb2d33202image.png)
 
 防火墙引发的问题
 
-![](images/WEBRESOURCEcbfcd2f9027542409897bbc244699f50image.png)
+![](images/WEBRESOURCEe334004c6fa147cf89c7447f30825e41image.png)
 
 防火墙指令：
 
@@ -179,7 +179,7 @@ firewall-cmd --reload
 
 可以先通过ps -ef | grep tomact 指令查看tomact进程的信息，从进程信息中获取tomact服务的进程号。然后通过kill -9的形式，来kill进程
 
-![](images/WEBRESOURCEaffd2a09c65d44d0a562bf0bd7d4b2b8image.png)
+![](images/WEBRESOURCE7cf0278b23e14d5198cefe414ad89ce3image.png)
 
 通过上述的指令，我们可以获取tomact的进程号79947。接下来，我们就可以通过指令，来killtomact的进程
 
@@ -233,7 +233,7 @@ rpm -e --nodeps mariadb-libs-5.5.60-1.el7_5.x86_64
 
 然后将准备好的mysql放到虚拟机中解压
 
-![](images/WEBRESOURCEff45ab2362ba40208d64fdb89bb9a47fimage.png)
+![](images/WEBRESOURCE5d637fa230844a4f9d5303326104b751image.png)
 
 解压命令
 
@@ -245,7 +245,7 @@ tar -zxvf mysql-5.7.25-1.el7.x86_64.rpm-bundle.tar.gz -C /usr/local/soft/mysql
 
 将mysql中的文件全部解压
 
-![](images/WEBRESOURCEd3871218640c4ce2a557104b96c2eb8cimage.png)
+![](images/WEBRESOURCE3e796aa4b2dd4692aa49e3203bdaa39bimage.png)
 
 命令
 
@@ -333,7 +333,7 @@ cat /var/log/mysqld.log | grep password
 
 result
 
-![](images/WEBRESOURCE07c8967ce23d4330b9fd1459ace65191image.png)
+![](images/WEBRESOURCEf76b050d0fa24c2d8a3527f32f06f3fbimage.png)
 
 登录mysql
 
@@ -371,7 +371,7 @@ firewall-cmd --reload;
 
 由于我使用的mysql是：
 
-![](images/WEBRESOURCE235736e8e6cf48d6ad59ded3a65a0c1aimage.png)
+![](images/WEBRESOURCE60c7ecb1cfad43969f6b8214049e098aimage.png)
 
 是2018年的，版本比较老
 
@@ -405,9 +405,99 @@ jdbc:mysql://你的IP:3306/数据库名?useSSL=false&allowPublicKeyRetrieval=tru
 
 ```bash
 vim /etc/my.cnf
-# 修改 /etc/my.cnf 文件
+# 修改 /etc/my.cnf 文件  这个my.cnf是mysql的核心配置文件
 [mysqld]
 init_connect = 'SET NAMES utf8'
 character-set-server = utf8
 collation-server =utf8_general_ci
 ```
+
+安装lrzsz(主要是练习时Yum安装软件)
+
+lrzsz是用于Linux系统中文件上传下载的软件。除了finalshell之后，很多远程连接实际上并不支持上传文件
+
+对于lrzsz的安装，需要通过第三种软件安装方式yum来进行安装。
+
+yum（大黄狗）能够从指定的服务器自动下载包并且按照，可以自行处理依赖关系，一次性安装所有依赖的软件包，无须繁琐地一次次下载，安装。
+
+```bash
+yum|参数|命令|<安装包>    说明
+参数：-y                在软件安装过程中所有的提示回答yes
+命令：install           安装指定的软件
+命令：remove            删除指定的安装包
+命令：list              搜索指定的安装包
+```
+
+安装lrzsz的步骤如下
+
+```bash
+yum list lrzsz
+
+
+#在线安装
+yum install lrzsz.x86_64
+
+#测试，命令行输入rz
+rz
+
+
+
+```
+
+yum拓展知识
+
+1. 如果在不更改软件来源的情况下，是需要联网才能使用yum的，那么我们按照的软件是从哪里下载的呢？yum源
+
+1. 查看yum源：yum repolist
+
+![](images/WEBRESOURCEac4c7260dbdf41ad8f7b8176592ad39cimage.png)
+
+1. 网络yum源配置文件位于/etc/yum.repos.d/目录下，文件扩展名为"*.repo"
+
+![](images/WEBRESOURCE28d15ecb0dc6446a8c23e23c6010f619image.png)
+
+可以看到，该目录下有7个yum配置文件，通常情况下CentOS-Base.repo文件生效
+
+1. 添加阿里云yum源
+
+1. 先通过yum install wget，按照wget命令
+
+1. 说明：wget表示上网下载。安装之前先去下载
+
+1. 备份默认的yum源，执行指令
+
+1. 切换目录：cd /etc/yum.repos.d/
+
+1. 创建备份目录:mkdir bak
+
+1. 移动现有的yum源文件到bak: mv *.repo bak/
+
+1. 下载阿里云的yum源
+
+1. wget -O /etc/yum.repos.d/CentOS-Base.repo 
+
+1. 说明：这里的-O表示阿里云的资源下载到/etc/yum.repos.d/CentOS-Base.repo文件中，即表示下载的指定文件
+
+1. 
+
+1. yum clean all
+
+1. 说明：清除yum缓存
+
+1. yum makecache
+
+1. 说明：是将服务器上的软件包信息存放到本地缓存，以提高搜索、按照软觉得速度
+
+1. 再次查看yum源
+
+项目部署
+
+查看8080端口号的pid
+
+```bash
+ netstat -tlnp | grep :8080
+```
+
+然后停掉
+
+部署期间发生的错误

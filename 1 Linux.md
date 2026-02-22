@@ -1,8 +1,8 @@
 linux目录的结构
 
-![](images/WEBRESOURCE576e74a05eb344f393722d4fbc1e1015image.png)
+![](images/WEBRESOURCE81fc0bf8a13e4a5dbced633c2514cc90image.png)
 
-![](images/WEBRESOURCE5f2bdd4eedae432e9364ff96031c3e02image.png)
+![](images/WEBRESOURCE43e6d21157db4ef5b2f0fea7723d5df6image.png)
 
 根目录下各个目录的作用和含义说明
 
@@ -68,7 +68,7 @@ cd ../..	..的意思是找爹。这里是找两个爹
 
 注意：删除文件时的提示信息显示为乱码
 
-![](images/WEBRESOURCE454ae768db624dfa9bc53b607522f44dimage.png)
+![](images/WEBRESOURCE8330695d988e4ea9a60aceacb1e7ecf1image.png)
 
 需要修改linux的编码
 
@@ -332,7 +332,7 @@ vi和vim的区别是vim有颜色的提示，看这更好看一些
 
 vim的三种命令模式转换
 
-![](images/WEBRESOURCEa25d9717561149e6883900e5301d7fc6image.png)
+![](images/WEBRESOURCE54e77a3f7b0d4aba98d982d68d831356image.png)
 
 查找命令
 
