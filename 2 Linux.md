@@ -1,4 +1,4 @@
-![](images/WEBRESOURCEf4ca00a74d5e4d8185bbb7e4b7e33e1bimage.png)
+![](images/WEBRESOURCE75c32f5bb309428fb6bf00423bab6ec1image.png)
 
 在linux系统中我们一般将软件安装到根路目录下的/usr/local目录中，我们在这个目录下可以创建一个自定义的目录，然后将jdk tomact等软件放到这个目录下
 
@@ -58,11 +58,11 @@ ps -aux | grep tomact
 
 如：windows的防火墙
 
-![](images/WEBRESOURCE4f70c360862b4c5fa939f0efb2d33202image.png)
+![](images/WEBRESOURCE81d14510b2b84740b5341016424272abimage.png)
 
 防火墙引发的问题
 
-![](images/WEBRESOURCEe334004c6fa147cf89c7447f30825e41image.png)
+![](images/WEBRESOURCEb270b21f617b4837800708819ad7a9c6image.png)
 
 防火墙指令：
 
@@ -179,7 +179,7 @@ firewall-cmd --reload
 
 可以先通过ps -ef | grep tomact 指令查看tomact进程的信息，从进程信息中获取tomact服务的进程号。然后通过kill -9的形式，来kill进程
 
-![](images/WEBRESOURCE7cf0278b23e14d5198cefe414ad89ce3image.png)
+![](images/WEBRESOURCE21048c1b090a489f83300de24ba78f8cimage.png)
 
 通过上述的指令，我们可以获取tomact的进程号79947。接下来，我们就可以通过指令，来killtomact的进程
 
@@ -233,7 +233,7 @@ rpm -e --nodeps mariadb-libs-5.5.60-1.el7_5.x86_64
 
 然后将准备好的mysql放到虚拟机中解压
 
-![](images/WEBRESOURCE5d637fa230844a4f9d5303326104b751image.png)
+![](images/WEBRESOURCEe9b031e7899946b28541aa65fe629fe4image.png)
 
 解压命令
 
@@ -245,7 +245,7 @@ tar -zxvf mysql-5.7.25-1.el7.x86_64.rpm-bundle.tar.gz -C /usr/local/soft/mysql
 
 将mysql中的文件全部解压
 
-![](images/WEBRESOURCE3e796aa4b2dd4692aa49e3203bdaa39bimage.png)
+![](images/WEBRESOURCE30db9aa3b22b46668e06ac908ad8cb6dimage.png)
 
 命令
 
@@ -333,7 +333,7 @@ cat /var/log/mysqld.log | grep password
 
 result
 
-![](images/WEBRESOURCEf76b050d0fa24c2d8a3527f32f06f3fbimage.png)
+![](images/WEBRESOURCEdaf0e8f1123a46e6814c170366d622f3image.png)
 
 登录mysql
 
@@ -371,7 +371,7 @@ firewall-cmd --reload;
 
 由于我使用的mysql是：
 
-![](images/WEBRESOURCE60c7ecb1cfad43969f6b8214049e098aimage.png)
+![](images/WEBRESOURCE895de03f0f6d4ab5aa9286b356f24480image.png)
 
 是2018年的，版本比较老
 
@@ -450,11 +450,11 @@ yum拓展知识
 
 1. 查看yum源：yum repolist
 
-![](images/WEBRESOURCEac4c7260dbdf41ad8f7b8176592ad39cimage.png)
+![](images/WEBRESOURCE38719c4b85f9489b97c8aded8848be34image.png)
 
 1. 网络yum源配置文件位于/etc/yum.repos.d/目录下，文件扩展名为"*.repo"
 
-![](images/WEBRESOURCE28d15ecb0dc6446a8c23e23c6010f619image.png)
+![](images/WEBRESOURCE8660c0f030564ae087a072e925e744bbimage.png)
 
 可以看到，该目录下有7个yum配置文件，通常情况下CentOS-Base.repo文件生效
 
@@ -492,7 +492,7 @@ yum拓展知识
 
 项目部署
 
-查看8080端口号的pid
+Linux查看8080端口号的pid
 
 ```bash
  netstat -tlnp | grep :8080
@@ -500,4 +500,370 @@ yum拓展知识
 
 然后停掉
 
+windows查看8080端口号的pid
+
+```bash
+netstat -ano | findstr :8080
+```
+
 部署期间发生的错误
+
+![](images/WEBRESOURCEa50fbe69876c4c73918345cd59027384image.png)
+
+问题出在这里，包名没有和application一致。
+
+总结来看
+
+问题一：mainClass中skip没有去掉，导致打包体积太小（100KB以下），取消skip即可完整打包
+
+问题二：mainClass中的包名一定要和application的入口类的名一致，否则无法运行
+
+又出问题了：
+
+版本问题
+
+```java
+Exception in thread "main" java.lang.UnsupportedClassVersionError: 
+com/itheima/HelloWorldApplication has been compiled by a more recent version of the Java Runtime 
+(class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
+```
+
+可见版本不兼容
+
+由于我们打包的时候使用的是java的version是11，所以错误。
+
+但是仅仅改了版本之后还是错误
+
+```xml
+<properties>
+    <java.version>8</java.version>
+</properties>
+```
+
+那么改了以下部分就没有错误了
+
+```xml
+<properties>
+    <java.version>8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+
+
+专门用来打包的部分
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.1</version>
+    <configuration>
+        <source>1.8</source>     改了这里
+        <target>1.8</target>        和这里
+        <encoding>UTF-8</encoding>
+    </configuration>
+</plugin>
+```
+
+这样就成功在虚拟机中运行了
+
+但是一旦把当前的窗口关闭了，该程序就无法运行了
+
+目前程序运行的问题
+
+1. 线上程序不会采用控制台霸屏的形式运行程序，而是将程序在后台运行
+
+1. 线上程序不会讲日志输出到控制台，而是输出到日志文件，方便运维查阅信息
+
+后台运行程序
+
+```bash
+nohup命令：no hang up（不挂起），用于不挂断地运行指定命令，退出终端不会影响程序的运行
+语法格式：nohup command Arg
+参数说明：
+    Command：要执行的命令
+    Arg：一些参数，可以指定输出文件
+    &：让命令在后台运行
+举例：
+    nohup java -jar boot工程.jar &> hello.log&
+    含义是：后台运行java -jar命令，并将日志输出到hello.log文件
+    
+```
+
+要想让程序在后台运行
+
+```bash
+nohup java -jar helloworld-1.0-SNAPSHOT.jar &> hello.log &
+```
+
+输出pid
+
+然后通过
+
+```bash
+ps -ef | grep java
+```
+
+查看到其在后台运行
+
+基于shell脚本自动部署（掌握，开发使用，环境安装全部由运维完成）
+
+以上的为手动部署，
+
+下面是为了简化手动部署而生的自动部署
+
+流程如下：
+
+![](images/WEBRESOURCEffdb769df0194d5ba2ae03c12ae0356fimage.png)
+
+操作步骤：
+
+1. 在Gitee/gitlab上创建远程仓库，并将本地的项目代码推送到远程仓库中
+
+1. 在Linux中安装Git，克隆代码
+
+1. 在Linux中安装Maven
+
+1. 编写Shell脚本（拉取代码、编译、打包、启动）
+
+1. 为用户授予Shell脚本权限
+
+1. 执行Shell
+
+在gitlab上创建helloworld_heima100，然后部署目标位空
+
+本地gitlab的配置
+
+分为几步
+
+1 创建一个全新的、专门用于gitlab的ssh秘钥。要生成一个全新的rsa秘钥对，并且起一个无歧义的名字（id_rsa_gitlab），已免覆盖现有的key
+
+在git bash中执行以下命令
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+注意：不要直接回车，因为直接回车的话就会在当前git bash here的目录下创建rsa秘钥。要输入手动输入新的文件路径名然后一直回车即可
+
+```bash
+/c/Users/11423/.ssh/id_rsa_gitlab
+```
+
+完成的标志是：Your identification has been saved in ...
+
+2 配置 ~/.ssh/config文件进行映射。现在需要告诉ssh客户端，“当我们访问gitlab.com时，使用刚才的秘钥
+
+   1 打开/创建config文件，在git bash中输入
+
+```bash
+nano ~/.ssh/config
+
+然后添加配置内容
+--- GitLab 配置 (新增的) ---
+Host gitlab.com
+HostName gitlab.com
+User git
+IdentityFile ~/.ssh/id_rsa_gitlab
+IdentitiesOnly yes
+
+---------------------------分割线
+说明：
+    Host gitlab.com
+    如果使用的是公有云就是gitlab.com
+    如果使用的是私有云就http://47.96.143.141
+    写法为：
+        Host 47.96.143.141
+            HostName 47.96.143.141
+            User git
+            IdentityFile ~/.ssh/id_rsa_gitlab
+            IdentitiesOnly yes
+            
+
+```
+
+3 将公钥添加到gitlab
+
+```bash
+cat ~/.ssh/id_rsa_gitlab.pub
+```
+
+然后添加到gitlab的ssh keys中
+
+4 测试
+
+```bash
+ssh -T git@gitlab.com
+```
+
+在linux上安装git
+
+```bash
+yum list git			列出git安装包
+yum install git			在线安装git
+```
+
+安装好之后用git --verison验证是否安装成功
+
+配置公钥的方法和Windows一致
+
+```bash
+ssh-keygen -t rsa
+```
+
+同样的方法，把公钥在gitlab上添加keys以下即可
+
+但是在linux的环境下测试
+
+```bash
+ssh -T git@gitlab.com
+```
+
+显示的是
+
+![](images/WEBRESOURCE9d9962ec540c4c1483a49dce60a670f8image.png)
+
+被拒绝了。
+
+这个问题的原因是：
+
+ssh客户端在连接的时候，默认尝试使用标准名称的私钥，比如
+
+- /root/.ssh/id_rsa
+
+- /root/.ssh/id_ecdsa
+
+- /root/.ssh/id_ed25519
+
+它不会默认使用id_rsa_gitlab 这样的非标准文件，所以即使是把公钥添加到gitlab中的keys中也无法连接。
+
+需要手动的配置mapping
+
+让ssh自动知道访问gitlab.com时使用什么钥匙
+
+1 编辑config文件
+
+```bash
+nano ~/.ssh/config
+```
+
+2 添加内容
+
+```bash
+Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile /root/.ssh/id_rsa_gitlab
+    IdentitiesOnly yes
+```
+
+3 再次测试
+
+```bash
+ssh -T git@gitlab.com
+```
+
+测试成功
+
+然后对gitlab的项目进行克隆
+
+```bash
+ git clone git@gitlab.com:Tom4471/helloworld_heima100.git
+```
+
+上传资料提供的maven包
+
+解压maven
+
+```bash
+tar -zxvf apache-maven-3.5.4-bin.tar.gz
+```
+
+在/etc/profile中配置环境变量
+
+```bash
+vim /etc/profile
+
+修改配置文件，进入到命令模式，按G切换到最后一行，按a/i/o进入插入模式，然后在最后加入如下内容 :
+MAVEN_HOME=/usr/local/soft/apache-maven-3.5.4
+PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+然后按ESC进入到命令模式，输入 :wq 保存并退出
+```
+
+刷新/etc/profile的配置
+
+```bash
+source /etc/profile
+```
+
+测试环境变量是否配置成功
+
+```bash
+mvb -v
+```
+
+可以查看是否成功
+
+之后修改maven的setting.xml配置文件，配置本地仓库的地址
+
+1 切换目录
+
+```bash
+cd /usr/local/soft/apache-maven-3.5.4/conf
+```
+
+2 编辑setting.xml文件
+
+```bash
+vim settings.xml
+```
+
+3 在/etc/profile配置文件中配置环境变量
+
+```bash
+vim /etc/profile
+
+修改配置文件，进入到命令模式，按G切换到最后一行，按a/i/o进入插入模式，然后在最后加入如下内容 :
+MAVEN_HOME=/usr/local/soft/apache-maven-3.5.4
+PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+然后按ESC进入到命令模式，输入 :wq 保存并退出
+```
+
+ 使得配置的环境变量生效
+
+```bash
+source /etc/profile
+```
+
+4 修改maven中的setting.xml配置文件，配置本地仓库的地址
+
+ a 切换目录
+
+```bash
+cd /usr/local/soft/apache-maven-3.5.4/conf
+```
+
+ b 编辑setting.xml文件
+
+```bash
+vim settings.xml
+```
+
+添加
+
+```xml
+    <localRepository>/usr/local/soft/repo</localRepository>
+    
+    <mirror> 
+    <id>alimaven</id> 
+    <mirrorOf>central</mirrorOf> 
+    <name>aliyun maven</name> 
+    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+</mirror> 
+```
+
+ c 创建本地仓库/usr/local/soft/repo
+
+```bash
+/usr/local/soft/repo
+```
