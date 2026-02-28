@@ -1,4 +1,4 @@
-![](images/WEBRESOURCE75c32f5bb309428fb6bf00423bab6ec1image.png)
+![](images/WEBRESOURCEa28a232cfd8c4f5eb16d40e58f9a5c8fimage.png)
 
 在linux系统中我们一般将软件安装到根路目录下的/usr/local目录中，我们在这个目录下可以创建一个自定义的目录，然后将jdk tomact等软件放到这个目录下
 
@@ -58,11 +58,11 @@ ps -aux | grep tomact
 
 如：windows的防火墙
 
-![](images/WEBRESOURCE81d14510b2b84740b5341016424272abimage.png)
+![](images/WEBRESOURCE527da8e85d344175b76f23cb94b47b59image.png)
 
 防火墙引发的问题
 
-![](images/WEBRESOURCEb270b21f617b4837800708819ad7a9c6image.png)
+![](images/WEBRESOURCE0eb37873d5d54365816a9d5478b0758fimage.png)
 
 防火墙指令：
 
@@ -179,7 +179,7 @@ firewall-cmd --reload
 
 可以先通过ps -ef | grep tomact 指令查看tomact进程的信息，从进程信息中获取tomact服务的进程号。然后通过kill -9的形式，来kill进程
 
-![](images/WEBRESOURCE21048c1b090a489f83300de24ba78f8cimage.png)
+![](images/WEBRESOURCE33975d5825fe462d95bffaa12b702083image.png)
 
 通过上述的指令，我们可以获取tomact的进程号79947。接下来，我们就可以通过指令，来killtomact的进程
 
@@ -233,7 +233,7 @@ rpm -e --nodeps mariadb-libs-5.5.60-1.el7_5.x86_64
 
 然后将准备好的mysql放到虚拟机中解压
 
-![](images/WEBRESOURCEe9b031e7899946b28541aa65fe629fe4image.png)
+![](images/WEBRESOURCE7ec7415c6b8a4919bf1f9f802f72f76cimage.png)
 
 解压命令
 
@@ -245,7 +245,7 @@ tar -zxvf mysql-5.7.25-1.el7.x86_64.rpm-bundle.tar.gz -C /usr/local/soft/mysql
 
 将mysql中的文件全部解压
 
-![](images/WEBRESOURCE30db9aa3b22b46668e06ac908ad8cb6dimage.png)
+![](images/WEBRESOURCEfc933aa3235a45dbb127e642cd0b7c84image.png)
 
 命令
 
@@ -333,7 +333,7 @@ cat /var/log/mysqld.log | grep password
 
 result
 
-![](images/WEBRESOURCEdaf0e8f1123a46e6814c170366d622f3image.png)
+![](images/WEBRESOURCE7f9718494dc843c987c0b74a73eed4beimage.png)
 
 登录mysql
 
@@ -371,7 +371,7 @@ firewall-cmd --reload;
 
 由于我使用的mysql是：
 
-![](images/WEBRESOURCE895de03f0f6d4ab5aa9286b356f24480image.png)
+![](images/WEBRESOURCE9f27732c7027441faaabd6404f960e7fimage.png)
 
 是2018年的，版本比较老
 
@@ -450,11 +450,11 @@ yum拓展知识
 
 1. 查看yum源：yum repolist
 
-![](images/WEBRESOURCE38719c4b85f9489b97c8aded8848be34image.png)
+![](images/WEBRESOURCEb926e6f69a8948cdaba1b777cc89d7f5image.png)
 
 1. 网络yum源配置文件位于/etc/yum.repos.d/目录下，文件扩展名为"*.repo"
 
-![](images/WEBRESOURCE8660c0f030564ae087a072e925e744bbimage.png)
+![](images/WEBRESOURCEb2ccb5301972474e9e5d55b54a4aa023image.png)
 
 可以看到，该目录下有7个yum配置文件，通常情况下CentOS-Base.repo文件生效
 
@@ -508,7 +508,7 @@ netstat -ano | findstr :8080
 
 部署期间发生的错误
 
-![](images/WEBRESOURCEa50fbe69876c4c73918345cd59027384image.png)
+![](images/WEBRESOURCEade382ad458e40da997a407496a35affimage.png)
 
 问题出在这里，包名没有和application一致。
 
@@ -612,7 +612,7 @@ ps -ef | grep java
 
 流程如下：
 
-![](images/WEBRESOURCEffdb769df0194d5ba2ae03c12ae0356fimage.png)
+![](images/WEBRESOURCEb15e5d504d1c40199c09f292660f0241image.png)
 
 操作步骤：
 
@@ -719,7 +719,7 @@ ssh -T git@gitlab.com
 
 显示的是
 
-![](images/WEBRESOURCE9d9962ec540c4c1483a49dce60a670f8image.png)
+![](images/WEBRESOURCE63edb97b10d847bca086290703960ffeimage.png)
 
 被拒绝了。
 
@@ -864,6 +864,143 @@ vim settings.xml
 
  c 创建本地仓库/usr/local/soft/repo
 
+shell脚本准备
+
 ```bash
-/usr/local/soft/repo
+shell脚本，是一种Linux系统中的脚本程序。使用shell脚本编程类似JavaScript、java编程，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本编辑器就可以了
 ```
+
+在usr/local/soft 中创建sh目录
+
+在该目录中创建bootStart.sh
+
+```bash
+#!/bin/sh
+#记事本打开，修改编码格式为utf8，可解决上传centos后中文乱码问题
+echo =================================
+echo  自动化部署脚本启动
+echo =================================
+
+echo 停止原来运行中的工程
+APP_NAME=helloworld
+# 查询系统中正在运行的helloworld的进程，并停止进程
+tpid=`ps -aux|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
+if [ ${tpid} ]; then
+    echo 'Stop Process...'
+    kill -15 $tpid
+fi
+sleep 2
+tpid=`ps -aux|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
+# 停止后再次查询，如果还存在，则通过kill -9 强制杀死
+if [ ${tpid} ]; then
+    echo 'Kill Process!'
+    kill -9 $tpid
+else
+    echo 'Stop Success!'
+fi
+
+echo 准备从Git仓库拉取最新代码
+cd /usr/local/soft/helloworld_heima100
+
+echo 开始从Git仓库拉取最新代码
+# 拉取最新代码
+git pull
+echo 代码拉取完成
+
+echo 开始打包
+# 执行打包，跳过单元测试
+output=`mvn clean package -Dmaven.test.skip=true`
+# 切换到当前工程的target目录下
+cd target
+
+echo 启动项目
+# 后台启动该项目
+nohup java -jar  helloworld-0.0.1-SNAPSHOT.jar &> helloworld.log &
+echo 项目启动完成
+```
+
+Linux权限
+
+shell脚本已经准备好了，但是shell脚本想要正常的执行，还需要给shell脚本分配执行权限。由于linux系统是一个多用户的操作系统，并且针对每一个用户，Linux会严格控制操作权限。
+
+1 chmod（change mode）命令是控制用户对文件的权限的命令
+
+2 Linux中的权限分为三种：读（r）、写（w）、执行（x）
+
+3 Linux文件权限从左到右分为三级：文件所有者（owner）、用户组（group）、其他用户（other）
+
+4 只有文件的所有者和超级用户可以修改文件或目录的权限
+
+5 要执行的shell脚本需要对此脚本文件的执行权限（x），如果没有则不执行
+
+Linux系统权限描述如下
+
+![](images/WEBRESOURCE1e3a675793514417b32fe54674ea7195image.png)
+
+解析当前脚本的权限问题
+
+![](images/WEBRESOURCEbb3818fce1744babbdb3dda59d987a71image.png)
+
+chmod命令可以使用八进制数来指定权限（0 - 代表无，1 - 执行x，2 - 写w，4 - 读r）：
+
+值-权限-rwx
+
+7	读+写+执行	rwx
+
+6	读+写		rw-
+
+5	读+执行		r-x
+
+4	只读			r--
+
+3	写+执行		-wx
+
+2	只写			-w-
+
+1	只执行		--x
+
+0	无			---
+
+举例
+
+```bash
+chmod 777 bootStart.sh    为所有用户授予读、写、执行权限
+chmod 755 bootStart.sh    为文件拥有者授予读、写、执行权限，同组用户和其他用户授予读、执行权限
+chmod 210 bootStart.sh    为文件拥有者授予写权限，同组用户授予执行权限，其他用户没有任何权限
+```
+
+注意：三个数字分别代表不同用户的权限
+
+-第1位表示的是文件拥有者的权限
+
+-第2位表示的是同组用户的权限
+
+-第3位表示的是其他用户的权限
+
+授予并执行脚本
+
+在测试阶段，可以给所有人都赋予执行该shell脚本的权限。所以可以执行
+
+```bash
+chmod 777 bootStart.sh
+```
+
+执行该脚本
+
+出现问题，无法打包
+
+需要修改一个部分
+
+```bash
+# 后台启动该项目
+nohup java -jar  helloworld-0.0.1-SNAPSHOT.jar &> helloworld.log &
+echo 项目启动完成
+```
+
+测试成功
+
+![](images/WEBRESOURCEce2ab8266c0a4cd7ae1e7b1033dd453aimage.png)
+
+整个流程跑通
+
+window下修改代码push - linux拉代码  - 自动重启部署
