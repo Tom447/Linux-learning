@@ -6,11 +6,11 @@ redis的基础理解
 
 【3】实际开发中我们先到mysql数据库查询(经历磁盘IO),然后将查询的数据放到redis中，以后查询相同数据直接到redis即内存中查询，这样效率高
 
-![](images/WEBRESOURCE6aa0401c72944a0099222f868c8acf4fimage.png)
+![](images/WEBRESOURCEa5f5b77ce1f04418a73710200d39518aimage.png)
 
 redis下载
 
-![](images/WEBRESOURCEf6a1089313514c81a5f1bdcac4cb325cimage.png)
+![](images/WEBRESOURCE527cb4a75c664fa5b3e8f47d83c06220image.png)
 
 redis在linux系统下安装
 
@@ -55,7 +55,7 @@ tar -zxvf redis-4.0.0.tar.gz
 
 进入redis，redis的目录如下
 
-![](images/WEBRESOURCEab99908d95ea4c31baaa61103537d91cimage.png)
+![](images/WEBRESOURCE5910f61f7ac94a598b559b28db25b4a8image.png)
 
 这些都是redis的源码
 
@@ -65,11 +65,11 @@ tar -zxvf redis-4.0.0.tar.gz
 make
 ```
 
-![](images/WEBRESOURCE5edd25d3efac4c38ae728e10a42ea7e3image.png)
+![](images/WEBRESOURCE66d5181fb5734db7b6fbea78b2232e52image.png)
 
 如下信息代表编译成功
 
-![](images/WEBRESOURCE3d2f8bac6fb94c72b8c685cfdcfbb283image.png)
+![](images/WEBRESOURCE8399d7ff0b294f6f9df83148912e1420image.png)
 
 5 在redis-4.0.0目录中，使用以下命令，将reids安装到/usr/local/soft/redis指定的目录下
 
@@ -77,11 +77,11 @@ make
 make PREFIX=/usr/local/soft/redis install 
 ```
 
-![](images/WEBRESOURCEc76c24aa157d41279278ac451aeae535image.png)
+![](images/WEBRESOURCEd4c141f3c629439384f1c3d2499e083dimage.png)
 
 安装成功后在/usr/local/redis/bin目录下可以看到如下结构。
 
-![](images/WEBRESOURCE130f844879ed46b5b086af6ae4a0ea42image.png)
+![](images/WEBRESOURCE059d4c6d1ae64eb1b43cd45a634bc719image.png)
 
 6 复制redis.conf配置文件到/usr/local/soft/redis/bin
 
@@ -93,7 +93,7 @@ cd /usr/local/soft/redis-4.0.0/
 cp redis.conf /usr/local/soft/redis/bin
 ```
 
-![](images/WEBRESOURCEdfc91a77b29c45da8ed26c98bd3c2a04image.png)
+![](images/WEBRESOURCE8ffb0054ffeb4878af49a900f5448589image.png)
 
 安装后重点说明：
 
@@ -113,7 +113,7 @@ redis启动服务器
 
 直接运行bin/redis-server
 
-![](images/WEBRESOURCE5ab2b41bd39a4469886e8869c62d1825image.png)
+![](images/WEBRESOURCE96d137a49a4e4be282010f77fd92f8a6image.png)
 
   ctrl + c可停止
 
@@ -127,7 +127,7 @@ daemonize：后台运行
 vim redis.conf
 ```
 
-![](images/WEBRESOURCE14a4fb670de64f609a57caf9e4ceea1bimage.png)
+![](images/WEBRESOURCE4fa81533a79c4a59b1fe96457b361d01image.png)
 
 保存并退出
 
@@ -139,7 +139,7 @@ cd /usr/local/soft/redis/bin
  ./redis-server redis.conf
 ```
 
-![](images/WEBRESOURCEa264d0eae0f049d7b18bfb9b7e4c1ba4image.png)
+![](images/WEBRESOURCE47921687366a4b67add4e0747634f50cimage.png)
 
 3 查看启动的后台进程
 
@@ -147,7 +147,7 @@ cd /usr/local/soft/redis/bin
 ps -aux | grep redis
 ```
 
-![](images/WEBRESOURCEc888fd92987d4d4db8add8f551c002b1image.png)
+![](images/WEBRESOURCE3fbb00c0610846b8b2ce66a6f2febfeeimage.png)
 
 redis启动客户端
 
@@ -157,7 +157,7 @@ redis启动客户端
 ./redis-cli
 ```
 
-![](images/WEBRESOURCE428fc165852a4f4d8da8c63b5a41e6e5image.png)
+![](images/WEBRESOURCE0d397da1646c40c496e33baf6885077bimage.png)
 
 停止redis
 
@@ -165,7 +165,7 @@ redis启动客户端
 
 方法：在redis客户端里面输入shutdown
 
-![](images/WEBRESOURCE5d1384708dbb4855b4a763c317c9a6c9image.png)
+![](images/WEBRESOURCE7395ec5a41684021a28a65de507eec08image.png)
 
 使用远程操作linux的redis必须启动linux下的redis
 
@@ -177,7 +177,7 @@ redis启动客户端
 
 使用的是
 
-![](images/WEBRESOURCE6351c7b206eb48799ae9de64c708327dimage.png)
+![](images/WEBRESOURCE8a56e3c1d2814493964318ce8d220aa1image.png)
 
 需要开放6379的端口号
 
@@ -192,7 +192,7 @@ systemctl restart firewalld
 
 Windows下的客户端还是无法连接redis
 
-![](images/WEBRESOURCE1139de937bf2427ba43a780415dae573image.png)
+![](images/WEBRESOURCEa987522765ce4ad78119d2ec3b544573image.png)
 
 5 修改配置允许其他机器访问
 
@@ -211,7 +211,7 @@ ip addr show | grep inet
 hostname -I
 ```
 
-![](images/WEBRESOURCEd29129c5023944e7a0a5ad6ab3ba0823image.png)
+![](images/WEBRESOURCE2994454d92624ea69a5380c159fc9730image.png)
 
 是192.168.10.100
 
@@ -261,7 +261,7 @@ rdb是默认的持久化方式。这种方式就是将内存中数据以快照�
 
 注意：快照是内存中数据的状态
 
-![](images/WEBRESOURCEa16ce24b625b4d5d8f36d46149a2f6c9image.png)
+![](images/WEBRESOURCE9d3ab64ca2f04aa18d656e32b01dcae0image.png)
 
 可以通过配置设置自动做快照持久化的方式。如下为配置的RDB方式数据持久化时机，必须两个条件都瞒住才能进行持久化操作
 
@@ -299,11 +299,11 @@ aof就是类似记录sql语句的所有语句一样
 
 aof写入
 
-![](images/WEBRESOURCE1f6e3b18ef9c495d804bc5e5c145c351image.png)
+![](images/WEBRESOURCE8bfb46a9fdff4b58ae26b7c4458c8633image.png)
 
 aof恢复
 
-![](images/WEBRESOURCE57d3f14cf1614c9d903419a22413a637image.png)
+![](images/WEBRESOURCE1824c304e12c498aa2f3852eb33de77bimage.png)
 
 aof包含了所有的修改操作。也可以通过该文件完成数据的重建。该机制可以带来更高的数据安全性，所有操作都是异步完成的
 
@@ -348,3 +348,90 @@ aof持久化配置
 ```markdown
 /appendonly 
 ```
+
+修改redis.conf 中的配置
+
+![](images/WEBRESOURCE0814c1df7ee24d4c8540078591142c15image.png)
+
+重新启动redis
+
+```bash
+./redis-server redis.conf
+```
+
+启动后看到
+
+![](images/WEBRESOURCEafbf6e4084e94a8caf8f348baa3f8dbbimage.png)
+
+appendonly.aof文件
+
+添加键和值
+
+![](images/WEBRESOURCE200be5f3f76d476ab427ef07d2c6ff2bimage.png)
+
+查看appendonly.aof内容可见
+
+目前的情况是配置有正确，但是开启aof之后，没有写入到appendonly.aof文件中
+
+```bash
+ps -ef | grep redis-server
+
+杀掉所有进程
+pkill -9 redis-server
+
+
+在redis-cli中输入
+CONFIG GET appendfilename
+输出为
+    appendonly.aof
+
+查看aof文件是否被配置成功
+
+
+```
+
+结论：我使用的是redis4.0.0的版本，存在这样的bug，即便是配置成功，并且备份的时候把备份的内容写入了appendonly.aof中，还是无法通过CONFIG GET appendfilename查到redis.conf中的appendfilename得到appendonly.aof
+
+由于写入了appendonly.aof中，所以即便是重启redis，依然可以得到备份的数据
+
+redis持久化机制RDB和aof的区别
+
+1 rdb持久化机制的优点和缺点
+
+优点：
+
+1）方便备份和恢复
+
+2）启动效率更高
+
+相比于aof机制，如果数据集很大，RDB的启动效率会更高。因为RDB文件中存储的是数据，启动的时候直接加载数据即可，而aof是将操作操作数据库的命令存放到AOF文件中，然后启动redis数据库服务器的时候会将很多命令执行加载数据。如果数据量特别大的时候，那么RDB由于直接加载启动效率会比AOF执行命令加载数据的效率更高
+
+3）性格最大化
+
+对于Redis的服务进程而言，在开始持久化时，会在后台开辟子线程，由子线程完成这些持久化的工作，这样就可以极大的避免服务进程执行IO操作了
+
+缺点：
+
+1）不能完成避免数据丢失
+
+因为RDB是每隔一段时间写入数据，所以系统一旦在定时持久化之前出现宕机现象，此时没有来得及写入磁盘的数据都将丢失
+
+2）会导致服务器暂停的现象
+
+由于RDB是通过子线程来协助完成数据持久化工作的，因此当数据集较大时，可能会导致整个服务器停止服务几百毫秒，甚至1秒钟
+
+就是数据量过大，会开辟过多的子线程进行持久化操作，那么会占用服务器端的大量资源，那么由可能会造成服务器端卡顿。同时会造成服务器停止几百毫秒甚至一秒
+
+aof持久化机制优点和缺点
+
+优点
+
+aof包含了一个格式清晰、易于理解的日志文件用于记录所有修改操作。也可以通过该文件完成数据的重建。该机制可以带来更高的数据安全性，所有操作都是异步完成的
+
+缺点
+
+1）运行效率比RDB更慢：根据同步策略的不同，aof的运行效率往往低于RDB
+
+2）文件比RDB更大：对于相同数量的数据集而言，aof文件通常要大于RDB文件
+
+一般在企业开发中两种持久化机制会配合使用
